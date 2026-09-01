@@ -1,0 +1,911 @@
+/* ==========================================================================
+   Heaven Furniture Mart — design tokens (design.md)
+   ========================================================================== */
+
+:root {
+  /* This site has one fixed palette by design — opt out of browser/OS
+     dark-mode color synthesis, which otherwise injects an opaque
+     synthesized background under semi-transparent layered gradients. */
+  color-scheme: light only;
+
+  /* Fonts */
+  --font-serif: 'Marcellus', 'Playfair Display', Georgia, serif; /* headlines only */
+  /* Satoshi (Indian Type Foundry, via Fontshare — free incl. commercial
+     use, not on Google Fonts) replaces Inter as the general text font. */
+  --font-sans: 'Satoshi', 'Inter', -apple-system, sans-serif;    /* everything else */
+  /* Requested "Britney"/"Brittney Script" is a paid marketplace script
+     font (personal-use-free, commercial paid), same situation as the
+     earlier "Schrödinger's" request — Alex Brush is a free Google Fonts
+     brush-script, bolder and more dramatic than Sacramento. Kickers only,
+     sentence case — caps would be illegible in a script face. */
+  --font-script: 'Alex Brush', cursive;
+
+  /* Palette */
+  --color-bg-dark: #14252A;   /* deep charcoal-teal */
+  --color-bg-light: #F6F1E8;  /* warm ivory */
+  --color-accent: #B98D4C;    /* muted gold/brass — fills, dividers, icons ONLY */
+  --color-text-dark: #2E2016; /* deep brown */
+  --color-wood-tan: #C9A877;  /* secondary accent, borders, hover */
+
+  /* Not in design.md — added for text-on-dark, since no token was specified there */
+  --color-text-light: #F6F1E8;
+
+  /* Layout */
+  --container-width: 1280px;
+  --header-height: 84px;
+  --section-padding-y: 64px;
+  --radius-image: 16px;
+}
+
+@media (min-width: 861px) {
+  :root {
+    --section-padding-y: 112px;
+  }
+}
+
+/* ==========================================================================
+   Reset / base
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text-dark);
+  background: var(--color-bg-light);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  margin: 0;
+}
+
+p, figure {
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 14px 32px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-bg-dark);
+}
+
+.btn-primary:hover {
+  background: var(--color-wood-tan);
+}
+
+/* Hero CTA specifically goes ghost/transparent on hover instead of the
+   solid wood-tan swap, so the triptych shows through — the Book a Consult
+   section's button keeps the solid hover since it sits on a flat dark bg
+   with no image to reveal. */
+.hero .btn-primary:hover {
+  background: rgba(185, 141, 76, 0.2);
+  border-color: var(--color-accent);
+  color: var(--color-text-light);
+}
+
+/* ==========================================================================
+   Site header / nav
+   ========================================================================== */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: linear-gradient(to bottom, rgba(20, 37, 42, 0.55), rgba(20, 37, 42, 0));
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Once scrolled past the hero, the header sits over light sections —
+   swap to a solid dark bar so nav text (styled for the dark hero) stays legible. */
+.site-header.is-scrolled {
+  background-color: var(--color-bg-dark);
+  box-shadow: 0 2px 16px rgba(20, 37, 42, 0.18);
+}
+
+.nav-inner {
+  max-width: var(--container-width);
+  margin-inline: auto;
+  height: 100%;
+  padding-inline: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  color: var(--color-text-light);
+}
+
+.logo-main {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.logo-accent {
+  color: var(--color-accent);
+}
+
+.logo-sub {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  color: var(--color-text-light);
+  opacity: 0.85;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  letter-spacing: 0.01em;
+}
+
+.nav-links a:not(.nav-cta):hover {
+  color: var(--color-wood-tan);
+}
+
+.nav-cta {
+  border: 1px solid var(--color-accent);
+  padding: 10px 20px;
+  border-radius: 2px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-cta:hover {
+  background: var(--color-accent);
+  color: var(--color-bg-dark);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text-light);
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(20, 37, 42, 0.35) 0%, rgba(20, 37, 42, 0.15) 30%, rgba(20, 37, 42, 0.15) 60%, rgba(20, 37, 42, 0.55) 100%),
+    radial-gradient(ellipse 70% 55% at 50% 48%, rgba(20, 37, 42, 0.62) 0%, rgba(20, 37, 42, 0.3) 55%, rgba(20, 37, 42, 0) 80%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 720px;
+  margin-inline: auto;
+  color: var(--color-text-light);
+}
+
+.hero-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-wood-tan);
+  margin-bottom: 20px;
+}
+
+.hero-headline {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.08;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hero-sub {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 24px 0 36px;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* ==========================================================================
+   Shared section utilities
+   ========================================================================== */
+
+.kicker {
+  font-family: var(--font-script);
+  font-size: clamp(2.3rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  line-height: 1;
+  color: var(--color-accent);
+  margin-bottom: 20px;
+}
+
+.kicker--center {
+  text-align: center;
+}
+
+.section-heading {
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  line-height: 1.15;
+  color: var(--color-text-dark);
+}
+
+/* ==========================================================================
+   Brand Intro
+   ========================================================================== */
+
+.brand-intro {
+  padding-block: var(--section-padding-y);
+}
+
+.brand-intro-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.brand-intro-text {
+  max-width: 480px;
+}
+
+.brand-intro-copy {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--color-text-dark);
+}
+
+.filmstrip {
+  position: relative;
+  /* Break out of .container's 24px padding to go full-bleed on mobile.
+     Uses the immediate parent's own box, not 100vw, so it stays exact
+     regardless of the grid nesting above it. */
+  width: calc(100% + 48px);
+  margin-inline: -24px;
+  padding-inline: 24px;
+}
+
+.filmstrip-viewport {
+  overflow: hidden;
+  border-radius: var(--radius-image);
+}
+
+.filmstrip-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filmstrip-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  /* Source photos vary in color temperature (warm wood vs. cool velvet vs.
+     black/chrome office chair) — this filter pulls them toward one warm
+     oatmeal grade so the filmstrip reads as a single shoot, per design.md's
+     cross-page grammar rule. A real regrade/reshoot would be the full fix. */
+  filter: sepia(0.35) saturate(1.15) brightness(1.03) contrast(0.96);
+}
+
+.filmstrip-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background: rgba(20, 37, 42, 0.55);
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.filmstrip-arrow:hover {
+  background: var(--color-bg-dark);
+}
+
+.filmstrip-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.filmstrip-prev {
+  left: 36px;
+}
+
+.filmstrip-next {
+  right: 36px;
+}
+
+.filmstrip-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.filmstrip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: var(--color-wood-tan);
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.filmstrip-dot.is-active {
+  opacity: 1;
+  background: var(--color-accent);
+}
+
+/* ==========================================================================
+   Why Choose Heaven
+   ========================================================================== */
+
+.why-choose {
+  padding-block: clamp(48px, 7vh, 80px);
+}
+
+.trust-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 20px;
+}
+
+.trust-item span {
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-text-dark);
+}
+
+.trust-item span::before {
+  content: '—';
+  color: var(--color-accent);
+  margin-right: 8px;
+}
+
+/* ==========================================================================
+   Collections Snapshot
+   ========================================================================== */
+
+/* Full-width 4:3 tiles, filling the container instead of a small
+   vh-capped square block — deviates from design.md's 1:1 "catalog tile"
+   grammar rule per explicit request. Tighter padding + a tile max-height
+   cap than a plain full-width aspect-ratio grid would give, since that
+   was pushing everything below (Why Choose Heaven) too far down the page. */
+.collections {
+  padding-block: clamp(48px, 7vh, 80px);
+}
+
+.collections-header {
+  margin-bottom: 20px;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.collection-tile {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  max-height: 400px;
+  overflow: hidden;
+  border-radius: var(--radius-image);
+}
+
+.collection-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.collection-tile:hover img {
+  transform: scale(1.045);
+}
+
+.collection-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 37, 42, 0.65) 0%, rgba(20, 37, 42, 0) 45%);
+  pointer-events: none;
+}
+
+.tile-label {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 2;
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Dark-section utility (Bespoke Highlight, Social Proof, Book a Consult)
+   ========================================================================== */
+
+.section--dark {
+  background: var(--color-bg-dark);
+  color: var(--color-text-light);
+}
+
+.section--dark .section-heading {
+  color: var(--color-text-light);
+}
+
+/* ==========================================================================
+   Bespoke Highlight
+   ========================================================================== */
+
+/* Full-bleed, hero-style treatment — same construction as .hero (media
+   layer + scrim + centered content layer). Edge-to-edge on purpose, like
+   the hero, so no rounded corners here despite the site's general
+   rounded-image rule; a "fullscreen" image can't bleed to the edge and
+   have visible corner radius at the same time. */
+.bespoke-highlight {
+  position: relative;
+  min-height: 90svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bespoke-media {
+  position: absolute;
+  inset: 0;
+}
+
+.bespoke-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bespoke-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(20, 37, 42, 0.55) 0%, rgba(20, 37, 42, 0.35) 35%, rgba(20, 37, 42, 0.4) 65%, rgba(20, 37, 42, 0.65) 100%),
+    radial-gradient(ellipse 65% 55% at 50% 48%, rgba(20, 37, 42, 0.5) 0%, rgba(20, 37, 42, 0.2) 55%, rgba(20, 37, 42, 0) 80%);
+}
+
+.bespoke-content {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  padding-inline: 24px;
+  text-align: center;
+}
+
+.bespoke-copy {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 20px auto 0;
+  max-width: 480px;
+  color: var(--color-text-light);
+  opacity: 0.92;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Social Proof
+   ========================================================================== */
+
+.social-proof {
+  padding-block: var(--section-padding-y);
+}
+
+/* Media first in markup = left column, matching the requested left
+   image / right text order (mirrors Brand Intro, which puts text left —
+   deliberately reversed here). */
+.social-proof-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.quote-mark {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  line-height: 1;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+
+.social-proof-quote {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  line-height: 1.4;
+  font-style: normal;
+  color: var(--color-text-light);
+}
+
+.social-proof-attribution {
+  margin-top: 24px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-wood-tan);
+}
+
+.social-proof-stat {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  opacity: 0.85;
+}
+
+/* Same carousel construction as the Brand Intro filmstrip (viewport +
+   sliding track + arrows + dots, driven by the same initCarousel() in
+   app.js), but its own class names — these photos are already
+   consistently graded, so unlike the filmstrip it skips the sepia
+   color-matching filter entirely. */
+.showroom-carousel {
+  position: relative;
+  width: calc(100% + 48px);
+  margin-inline: -24px;
+  padding-inline: 24px;
+}
+
+.showroom-viewport {
+  overflow: hidden;
+  border-radius: var(--radius-image);
+}
+
+.showroom-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.showroom-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================================
+   Book a Consult
+   ========================================================================== */
+
+.book-consult {
+  padding-block: var(--section-padding-y);
+}
+
+.book-consult-sub {
+  margin-top: 16px;
+  font-size: 1rem;
+  color: var(--color-text-light);
+  opacity: 0.85;
+  max-width: 460px;
+}
+
+.consult-form {
+  max-width: 420px;
+  margin-top: 40px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.form-field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-wood-tan);
+}
+
+.form-field input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(246, 241, 232, 0.35);
+  color: var(--color-text-light);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  padding: 10px 2px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-field input::placeholder {
+  color: rgba(246, 241, 232, 0.35);
+}
+
+.form-field input:focus {
+  border-bottom-color: var(--color-accent);
+}
+
+.consult-reassurance {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  background: var(--color-bg-dark);
+  color: var(--color-text-light);
+  border-top: 1px solid rgba(185, 141, 76, 0.4);
+  padding-top: clamp(40px, 6vh, 64px);
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  padding-bottom: 40px;
+}
+
+.footer-heading {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-wood-tan);
+  margin-bottom: 16px;
+}
+
+.footer-link {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text-light);
+  opacity: 0.85;
+  margin-bottom: 8px;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.footer-link:hover {
+  opacity: 1;
+  color: var(--color-wood-tan);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 14px;
+}
+
+.footer-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(246, 241, 232, 0.3);
+  color: var(--color-text-light);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.footer-social-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.footer-social-icon:hover {
+  border-color: var(--color-accent);
+  color: var(--color-wood-tan);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(246, 241, 232, 0.1);
+  padding-block: 20px;
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 0.78rem;
+  color: var(--color-text-light);
+  opacity: 0.55;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background: var(--color-bg-dark);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .nav-links.is-open {
+    max-height: 320px;
+  }
+
+  .nav-links a {
+    width: 100%;
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(246, 241, 232, 0.1);
+  }
+
+  .nav-cta {
+    border: none;
+    margin: 12px 24px;
+    width: calc(100% - 48px);
+  }
+}
+
+@media (min-width: 861px) {
+  .brand-intro-inner {
+    grid-template-columns: 0.7fr 1fr;
+    gap: 56px;
+  }
+
+  .filmstrip {
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .trust-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .social-proof-inner {
+    grid-template-columns: 3fr 2fr;
+    gap: 56px;
+  }
+
+  .showroom-carousel {
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 40px;
+  }
+}
