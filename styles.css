@@ -252,6 +252,7 @@ p, figure {
 .hero-media {
   position: absolute;
   inset: 0;
+  background: var(--color-bg-dark);
 }
 
 .hero-image {
@@ -863,6 +864,16 @@ p, figure {
    ========================================================================== */
 
 @media (max-width: 860px) {
+  /* The hero triptych (2752x1536, ~1.79:1) is much wider than a phone's
+     tall viewport. object-fit: cover was cropping in from both sides to
+     fill the height, leaving only the center (office) panel visible —
+     bedroom and dining were cropped off entirely. contain keeps all
+     three panels in frame, letterboxed with the dark brand color rather
+     than stretched or cropped. */
+  .hero-image {
+    object-fit: contain;
+  }
+
   .nav-toggle {
     display: flex;
   }
