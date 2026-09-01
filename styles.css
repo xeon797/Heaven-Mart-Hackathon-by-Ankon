@@ -484,29 +484,30 @@ p, figure {
    Collections Snapshot
    ========================================================================== */
 
-/* Full-width 4:3 tiles, filling the container instead of a small
-   vh-capped square block — deviates from design.md's 1:1 "catalog tile"
-   grammar rule per explicit request. Tighter padding + a tile max-height
-   cap than a plain full-width aspect-ratio grid would give, since that
-   was pushing everything below (Why Choose Heaven) too far down the page. */
+/* Full-width 4:3-ish tiles inside the standard .container — deviates
+   from design.md's 1:1 "catalog tile" grammar rule per explicit request. */
 .collections {
-  padding-block: clamp(48px, 7vh, 80px);
+  padding-block: clamp(36px, 5vh, 60px);
 }
 
 .collections-header {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .collections-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 8px;
 }
 
 .collection-tile {
+  /* Explicit width+height instead of aspect-ratio+max-height — aspect-ratio
+     combined with max-height let the browser shrink the tile's WIDTH to
+     stay proportional at the capped height, instead of stretching to fill
+     its grid column, which is what produced a gap between the columns. */
   position: relative;
-  aspect-ratio: 4 / 3;
-  max-height: 400px;
+  width: 100%;
+  height: clamp(180px, 15vw, 300px);
   overflow: hidden;
   border-radius: var(--radius-image);
 }
@@ -708,16 +709,27 @@ p, figure {
   max-width: 460px;
 }
 
-.consult-form {
-  max-width: 420px;
+/* A light ivory card for the form itself — a distinct "dedicated area"
+   against the dark section, rather than bare fields floating on it. */
+.consult-card {
+  background: var(--color-bg-light);
+  border-radius: 28px;
+  padding: 40px;
   margin-top: 40px;
+  max-width: 440px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+.consult-form {
+  max-width: none;
+  margin-top: 0;
 }
 
 .form-field {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 22px;
 }
 
 .form-field label {
@@ -725,34 +737,43 @@ p, figure {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-wood-tan);
+  color: var(--color-accent);
 }
 
 .form-field input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(246, 241, 232, 0.35);
-  color: var(--color-text-light);
+  background: var(--color-bg-light);
+  border: 1.5px solid rgba(46, 32, 22, 0.16);
+  border-radius: 12px;
+  color: var(--color-text-dark);
   font-family: var(--font-sans);
   font-size: 1rem;
-  padding: 10px 2px;
+  padding: 12px 16px;
   outline: none;
   transition: border-color 0.2s ease;
 }
 
 .form-field input::placeholder {
-  color: rgba(246, 241, 232, 0.35);
+  color: rgba(46, 32, 22, 0.35);
 }
 
 .form-field input:focus {
-  border-bottom-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.form-field input:invalid:not(:placeholder-shown) {
+  border-color: #b8493f;
+}
+
+.consult-card .btn-primary {
+  width: 100%;
 }
 
 .consult-reassurance {
-  margin-top: 16px;
+  margin-top: 18px;
   font-size: 0.85rem;
-  color: var(--color-text-light);
-  opacity: 0.7;
+  color: var(--color-text-dark);
+  opacity: 0.65;
+  text-align: center;
 }
 
 /* ==========================================================================
@@ -884,7 +905,7 @@ p, figure {
   }
 
   .filmstrip {
-    width: 100%;
+    width: 80%;
     margin-inline: 0;
     padding-inline: 0;
   }

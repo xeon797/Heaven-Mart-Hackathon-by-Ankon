@@ -201,18 +201,24 @@
       <h2 class="section-heading">Book a Free Consultation</h2>
       <p class="book-consult-sub">Tell us a bit about you and we'll take it from there.</p>
 
-      <form class="consult-form" id="consult-form" novalidate>
-        <div class="form-field">
-          <label for="consult-name">Name</label>
-          <input type="text" id="consult-name" name="name" autocomplete="name" required>
-        </div>
-        <div class="form-field">
-          <label for="consult-phone">WhatsApp Number</label>
-          <input type="tel" id="consult-phone" name="phone" autocomplete="tel" placeholder="+880 1XXX-XXXXXX" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Book a Consultation</button>
-      </form>
-      <p class="consult-reassurance">We'll reply on WhatsApp within the day.</p>
+      <div class="consult-card">
+        <form class="consult-form" id="consult-form" novalidate>
+          <div class="form-field">
+            <label for="consult-name">Name</label>
+            <input type="text" id="consult-name" name="name" autocomplete="name" placeholder="Your full name" required>
+          </div>
+          <div class="form-field">
+            <label for="consult-email">Email</label>
+            <input type="email" id="consult-email" name="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-field">
+            <label for="consult-phone">WhatsApp Number</label>
+            <input type="tel" id="consult-phone" name="phone" autocomplete="tel" placeholder="01XXXXXXXXX" inputmode="numeric" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Book a Consultation</button>
+        </form>
+        <p class="consult-reassurance">We'll reply on WhatsApp within the day.</p>
+      </div>
     </div>
   </section>
 

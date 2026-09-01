@@ -77,22 +77,36 @@ function initCarousel({ rootId, trackId, dotsId, prevId, nextId, autoplayMs = 20
 initCarousel({ rootId: 'filmstrip', trackId: 'filmstrip-track', dotsId: 'filmstrip-dots', prevId: 'filmstrip-prev', nextId: 'filmstrip-next' });
 initCarousel({ rootId: 'showroom-carousel', trackId: 'showroom-track', dotsId: 'showroom-dots', prevId: 'showroom-prev', nextId: 'showroom-next' });
 
-// Book a Consult — builds a WhatsApp deep link client-side, no backend
+// Book a Consult — builds a WhatsApp deep link client-side, no backend.
+// Validates email format and that the phone number is exactly 11 digits
+// (Bangladeshi mobile numbers, e.g. 01XXXXXXXXX).
 const consultForm = document.getElementById('consult-form');
 
 if (consultForm) {
+  const emailInput = document.getElementById('consult-email');
+  const phoneInput = document.getElementById('consult-phone');
+  const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   consultForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const name = document.getElementById('consult-name').value.trim();
-    const phone = document.getElementById('consult-phone').value.trim();
+    const email = emailInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const phoneDigits = phone.replace(/\D/g, '');
 
-    if (!name || !phone) {
+    const emailValid = EMAIL_PATTERN.test(email);
+    emailInput.setCustomValidity(email && !emailValid ? 'Enter a valid email address.' : '');
+
+    const phoneValid = phoneDigits.length === 11;
+    phoneInput.setCustomValidity(phone && !phoneValid ? 'Enter an 11-digit Bangladeshi mobile number, e.g. 01XXXXXXXXX.' : '');
+
+    if (!name || !email || !phone || !emailValid || !phoneValid) {
       consultForm.reportValidity();
       return;
     }
 
-    const message = `Hi, I'm ${name}, my WhatsApp number is ${phone}, I'd like to book a free design consultation.`;
+    const message = `Hi, I'm ${name}, my email is ${email}, my WhatsApp number is ${phone}, I'd like to book a free design consultation.`;
     const url = `https://wa.me/8801960481983?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener');
   });
