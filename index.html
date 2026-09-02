@@ -195,6 +195,71 @@
     </div>
   </section>
 
+  <section class="milestones" id="milestones" aria-labelledby="milestones-heading">
+    <div class="container">
+      <div class="milestones-header">
+        <p class="kicker kicker--center">Our Journey</p>
+        <h2 class="section-heading" id="milestones-heading">Milestones Along the Way</h2>
+      </div>
+
+      <ol class="roadmap">
+        <!-- Decorative winding path — drawn behind the stops on desktop,
+             hidden on mobile in favour of a vertical rail. preserveAspectRatio
+             is "none" so the viewBox stretches to the container box, letting
+             the dot top: percentages below line up with the path's node Y
+             values (band Y 210 and 110 of the 320-tall viewBox). -->
+        <svg class="roadmap-path" viewBox="0 0 1000 320" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d="M100,210 C200,210 200,110 300,110 C400,110 400,210 500,210 C600,210 600,110 700,110 C800,110 800,210 900,210"
+            fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+            stroke-dasharray="2 14" opacity="0.45"
+          />
+          <path
+            class="roadmap-path-line"
+            d="M100,210 C200,210 200,110 300,110 C400,110 400,210 500,210 C600,210 600,110 700,110 C800,110 800,210 900,210"
+            fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+          />
+        </svg>
+
+        <li class="roadmap-stop roadmap-stop--low">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-card">
+            <p class="roadmap-year">2020</p>
+            <p class="roadmap-text">Founded in Chattogram by Managing Director Abul Kalam Bhuiyan.</p>
+          </div>
+        </li>
+        <li class="roadmap-stop roadmap-stop--high">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-card">
+            <p class="roadmap-year">2021</p>
+            <p class="roadmap-text">Opened the Agrabad showroom.</p>
+          </div>
+        </li>
+        <li class="roadmap-stop roadmap-stop--low">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-card">
+            <p class="roadmap-year">2024&ndash;25</p>
+            <p class="roadmap-text">Exhibited at the International Furniture Fair, Chattogram.</p>
+          </div>
+        </li>
+        <li class="roadmap-stop roadmap-stop--high">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-card">
+            <p class="roadmap-year">2025</p>
+            <p class="roadmap-text">Joined the Chamber of Commerce.</p>
+          </div>
+        </li>
+        <li class="roadmap-stop roadmap-stop--low">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-card">
+            <p class="roadmap-year">2026</p>
+            <p class="roadmap-text">Earned nationwide BFIOA recognition.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <section class="book-consult section--dark" id="book-consult">
     <div class="container book-consult-inner">
       <p class="kicker">Ready When You Are</p>
