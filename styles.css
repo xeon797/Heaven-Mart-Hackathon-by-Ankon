@@ -287,9 +287,12 @@ p, figure {
 
 .hero-kicker {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.3em;
+  /* larger than body text, scaling gently with viewport */
+  font-size: clamp(0.95rem, 1.6vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  /* even optical spacing: the tracking adds space after the last letter too, so nudge it back */
+  text-indent: 0.42em;
   text-transform: uppercase;
   color: var(--color-wood-tan);
   margin-bottom: 20px;
@@ -397,34 +400,40 @@ p, figure {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  /* No pill background — just the arrow glyph. The generous padding forms an
+     invisible hover zone hugging each side, so the arrows only appear when the
+     cursor is near that corner, not whenever the carousel is hovered. */
+  padding: 44px 22px;
   border: none;
-  background: rgba(20, 37, 42, 0.55);
+  background: none;
   color: var(--color-text-light);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-.filmstrip-arrow:hover {
-  background: var(--color-bg-dark);
+.filmstrip-arrow:hover,
+.filmstrip-arrow:focus-visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 .filmstrip-arrow svg {
-  width: 18px;
-  height: 18px;
+  width: 30px;
+  height: 30px;
+  filter: drop-shadow(0 1px 6px rgba(20, 37, 42, 0.65));
 }
 
 .filmstrip-prev {
-  left: 36px;
+  left: 4px;
 }
 
 .filmstrip-next {
-  right: 36px;
+  right: 4px;
 }
 
 .filmstrip-dots {
